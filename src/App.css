@@ -19,3 +19,14 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.App {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.building {
+  flex: 1 0 20em;
+  margin: 1em;
+}
