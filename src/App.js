@@ -36,7 +36,7 @@ function App() {
     const { access_token, expires_in } = response;
     localStorage.setItem('access_token', access_token);
     
-    localStorage.setItem('token_expires_at', Date.now() + expires_in);
+    localStorage.setItem('token_expires_at', Date.now() + expires_in*1000);
 
     const userEmail = await getUserEmail(access_token);
     setUserInfo({ email: userEmail, access_token });
