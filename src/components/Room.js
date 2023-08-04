@@ -9,7 +9,7 @@ export const Room = ({ room, onBook }) => {
       : room.timeUntilNextBooking < 0 ? "Occupée"
       : `Prochain créneau dans : ${formatTime(
           room.timeUntilNextBooking
-        )} minutes`;
+        )}`;
 
   const now = new Date();
   const minutes = now.getMinutes();
