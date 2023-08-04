@@ -67,11 +67,7 @@ function App() {
     setRoomsByBuilding(roomsByBuilding);
   };
 
-  const onGoogleAuthResponse = (response) => {
-    handleCredentialResponse(response);
-  };
-
-  const googleAuthClient = useGoogleAuthClient(onGoogleAuthResponse);
+  const googleAuthClient = useGoogleAuthClient(handleCredentialResponse);
   useEffect(() => {
     const access_token = localStorage.getItem('access_token');
     const token_expires_at = localStorage.getItem('token_expires_at');
@@ -79,7 +75,7 @@ function App() {
 
     // Vérifier si le token d'accès est toujours valide
     if (access_token && Date.now() < token_expires_at) {
-      handleCredentialResponse({ access_token, expires_in: token_expires_at - Date.now() });
+      handleCredentialResponse({ access_token, expires_in: (token_expires_at - Date.now())/1000 });
     } else {
       // Supprimer le access_token du localStorage s'il a expiré
       console.warn('Access token expired REMOVING');
