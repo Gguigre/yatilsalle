@@ -38,8 +38,18 @@ function App() {
     
     localStorage.setItem('token_expires_at', Date.now() + expires_in*1000);
 
-    const userEmail = await getUserEmail(access_token);
-    setUserInfo({ email: userEmail, access_token });
+    try {
+      const userEmail = await getUserEmail(access_token);
+      setUserInfo({ email: userEmail, access_token });
+    } catch (error) {
+      console.error(error);
+      
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('token_expires_at');
+      googleAuthClient.requestAccessToken();
+
+      return;
+    }
 
     const resources = await getResources(access_token);
     const roomsWithAvailability = await Promise.all(
