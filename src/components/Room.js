@@ -37,11 +37,11 @@ export const Room = ({ room, onBook }) => {
       style={{
         backgroundColor:
           room.timeUntilNextBooking > 60
-            ? "#4caf50"
+            ? "#81c784"
             : room.timeUntilNextBooking > 30
-            ? "#ffeb3b"
-            : "#f44336",
-      }}
+            ? "#fff176"
+            : "#e57373",
+      }}      
     >
       <div className="room-info">
         <h2>{room.resourceName}</h2>
