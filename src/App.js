@@ -32,6 +32,7 @@ function App() {
   }, [userInfo]);
 
   const handleCredentialResponse = async (response) => {
+    console.info('credentials', response)
     const { access_token, expires_in } = response;
     localStorage.setItem('access_token', access_token);
     
