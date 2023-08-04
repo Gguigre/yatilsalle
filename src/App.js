@@ -6,10 +6,32 @@ import { bookRoom } from "./services/bookRoom";
 import { getResources } from "./services/getResources";
 import { getTimeUntilNextBooking } from "./services/getTimeUntilNextBooking";
 import { getUserEmail } from "./services/getUserEmail";
+import { getCurrentEvents } from "./services/getCurrentEvents";
+import { CurrentEvent } from "./components/CurrentEvent";
+import { updateEvent } from "./services/updateEvent";
 
 function App() {
   const [roomsByBuilding, setRoomsByBuilding] = useState({});
   const [userInfo, setUserInfo] = useState(null);
+  const [currentEvent, setCurrentEvent] = useState(null);
+
+  useEffect(() => {
+    const fetchCurrentEvents = async () => {
+      const currentEvents = await getCurrentEvents(userInfo.access_token);
+      const confirmedEvents = currentEvents.filter(
+        (event) => event.status === "confirmed"
+      );
+
+      if (confirmedEvents.length > 0) {
+        console.log(confirmedEvents);
+        const currentEvent = confirmedEvents[0];
+        setCurrentEvent(() => currentEvent);
+      }
+    };
+    if (userInfo) {
+      fetchCurrentEvents();
+    }
+  }, [userInfo]);
 
   const handleCredentialResponse = async (response) => {
     const { access_token } = response;
@@ -44,7 +66,6 @@ function App() {
   };
 
   const onGoogleAuthResponse = (response) => {
-    console.log(response);
     handleCredentialResponse(response);
   };
 
@@ -56,29 +77,34 @@ function App() {
   const onBook = async (roomEmail, start, end) => {
     if (userInfo) {
       const summary = `Résa ${userInfo.email.split("@")[0]}`;
-      console.log({
-        access_token: userInfo.access_token,
-        roomEmail,
-        start: start.toISOString(),
-        end: end.toISOString(),
-        summary,
-      });
-      await bookRoom(userInfo.access_token, roomEmail, start, end, summary);
-      alert("Réservation effectuée !");
+      if (currentEvent) {
+        await updateEvent(
+          userInfo.access_token,
+          currentEvent,
+          roomEmail
+        );
+        alert("Événement mis à jour avec la nouvelle salle !");
+      } else {
+        await bookRoom(userInfo.access_token, roomEmail, start, end, summary);
+        alert("Réservation effectuée !");
+      }
     }
   };
 
   return (
     <div className="App">
       <div id="buttonDiv"></div>
-      {Object.entries(roomsByBuilding).map(([buildingId, rooms]) => (
-        <div key={buildingId} className="building">
-          <h1>{buildingId}</h1>
-          {rooms.map((room) => (
-            <Room key={room.resourceEmail} room={room} onBook={onBook} />
-          ))}
-        </div>
-      ))}
+      {currentEvent && <CurrentEvent currentEvent={currentEvent} />}
+      <div className="buildings">
+        {Object.entries(roomsByBuilding).map(([buildingId, rooms]) => (
+          <div key={buildingId} className="building">
+            <h1>{buildingId}</h1>
+            {rooms.map((room) => (
+              <Room key={room.resourceEmail} room={room} onBook={onBook} />
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
