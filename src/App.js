@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
+import { CurrentEvent } from "./components/CurrentEvent";
 import { Room } from "./components/Room";
 import { useGoogleAuthClient } from "./hooks/useGoogleAuth";
 import { bookRoom } from "./services/bookRoom";
+import { getCurrentEvents } from "./services/getCurrentEvents";
 import { getResources } from "./services/getResources";
 import { getTimeUntilNextBooking } from "./services/getTimeUntilNextBooking";
 import { getUserEmail } from "./services/getUserEmail";
-import { getCurrentEvents } from "./services/getCurrentEvents";
-import { CurrentEvent } from "./components/CurrentEvent";
-import { updateEvent } from "./services/updateEvent";
 
 function App() {
   const [roomsByBuilding, setRoomsByBuilding] = useState({});
@@ -92,17 +91,8 @@ function App() {
   const onBook = async (roomEmail, start, end) => {
     if (userInfo) {
       const summary = `Résa ${userInfo.email.split("@")[0]}`;
-      // if (currentEvent) {
-      //   await updateEvent(
-      //     userInfo.access_token,
-      //     currentEvent,
-      //     roomEmail
-      //   );
-      //   alert("Événement mis à jour avec la nouvelle salle !");
-      // } else {
       await bookRoom(userInfo.access_token, roomEmail, start, end, summary);
       alert("Réservation effectuée !");
-      // }
     }
   };
 

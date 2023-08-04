@@ -14,7 +14,7 @@ export const getResources = async (access_token) => {
   
     // Filtrer pour ne garder que les salles de conférence
     const conferenceRooms = response.data.items.filter(
-      (item) => item.resourceCategory === "CONFERENCE_ROOM"
+      (item) => item.capacity > 0
     );
   
     return conferenceRooms;
