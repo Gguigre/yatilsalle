@@ -77,17 +77,17 @@ function App() {
   const onBook = async (roomEmail, start, end) => {
     if (userInfo) {
       const summary = `Résa ${userInfo.email.split("@")[0]}`;
-      if (currentEvent) {
-        await updateEvent(
-          userInfo.access_token,
-          currentEvent,
-          roomEmail
-        );
-        alert("Événement mis à jour avec la nouvelle salle !");
-      } else {
-        await bookRoom(userInfo.access_token, roomEmail, start, end, summary);
-        alert("Réservation effectuée !");
-      }
+      // if (currentEvent) {
+      //   await updateEvent(
+      //     userInfo.access_token,
+      //     currentEvent,
+      //     roomEmail
+      //   );
+      //   alert("Événement mis à jour avec la nouvelle salle !");
+      // } else {
+      await bookRoom(userInfo.access_token, roomEmail, start, end, summary);
+      alert("Réservation effectuée !");
+      // }
     }
   };
 
