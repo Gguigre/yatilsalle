@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/yatilsalle/static/css/main.16c1cc5c.css",
-    "main.js": "/yatilsalle/static/js/main.1bfde58c.js",
+    "main.js": "/yatilsalle/static/js/main.951afe97.js",
     "static/js/787.ce88deb6.chunk.js": "/yatilsalle/static/js/787.ce88deb6.chunk.js",
     "index.html": "/yatilsalle/index.html",
     "main.16c1cc5c.css.map": "/yatilsalle/static/css/main.16c1cc5c.css.map",
-    "main.1bfde58c.js.map": "/yatilsalle/static/js/main.1bfde58c.js.map",
+    "main.951afe97.js.map": "/yatilsalle/static/js/main.951afe97.js.map",
     "787.ce88deb6.chunk.js.map": "/yatilsalle/static/js/787.ce88deb6.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.16c1cc5c.css",
-    "static/js/main.1bfde58c.js"
+    "static/js/main.951afe97.js"
   ]
 }
