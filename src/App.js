@@ -23,7 +23,6 @@ function App() {
       );
 
       if (confirmedEvents.length > 0) {
-        console.log(confirmedEvents);
         const currentEvent = confirmedEvents[0];
         setCurrentEvent(() => currentEvent);
       }
@@ -34,7 +33,10 @@ function App() {
   }, [userInfo]);
 
   const handleCredentialResponse = async (response) => {
-    const { access_token } = response;
+    const { access_token, expires_in } = response;
+    localStorage.setItem('access_token', access_token);
+    
+    localStorage.setItem('token_expires_at', Date.now() + expires_in);
 
     const userEmail = await getUserEmail(access_token);
     setUserInfo({ email: userEmail, access_token });
@@ -71,7 +73,20 @@ function App() {
 
   const googleAuthClient = useGoogleAuthClient(onGoogleAuthResponse);
   useEffect(() => {
-    googleAuthClient.requestAccessToken();
+    const access_token = localStorage.getItem('access_token');
+    const token_expires_at = localStorage.getItem('token_expires_at');
+
+
+    // Vérifier si le token d'accès est toujours valide
+    if (access_token && Date.now() < token_expires_at) {
+      handleCredentialResponse({ access_token, expires_in: token_expires_at - Date.now() });
+    } else {
+      // Supprimer le access_token du localStorage s'il a expiré
+      console.warn('Access token expired REMOVING');
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('token_expires_at');
+      googleAuthClient.requestAccessToken();
+    }
   }, []);
 
   const onBook = async (roomEmail, start, end) => {
