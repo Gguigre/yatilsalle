@@ -7,6 +7,7 @@ export const useGoogleAuthClient = (handleCredentialResponse) => {
       "https://www.googleapis.com/auth/admin.directory.resource.calendar.readonly",
       "https://www.googleapis.com/auth/admin.directory.resource.calendar",
       "https://www.googleapis.com/auth/calendar.events",
+      "https://www.googleapis.com/auth/userinfo.profile",
     ].join(" "),
     callback: handleCredentialResponse,
   });
