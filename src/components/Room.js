@@ -6,6 +6,7 @@ export const Room = ({ room, onBook }) => {
   const freeTimeLabel =
     room.timeUntilNextBooking === Infinity
       ? "Libre toute la journée"
+      : room.timeUntilNextBooking < 0 ? "Occupée"
       : `Prochain créneau dans : ${formatTime(
           room.timeUntilNextBooking
         )} minutes`;
