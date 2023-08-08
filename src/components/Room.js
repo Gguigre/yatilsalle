@@ -27,7 +27,7 @@ export const Room = ({ room, onBook }) => {
   }
 
   const bookingLabel =
-    room.timeUntilNextBooking < 30
+    room.timeUntilNextBooking < 5
       ? null
       : getBookingLabel(bookingStart, bookingEnd);
 
