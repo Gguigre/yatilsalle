@@ -9,7 +9,7 @@ export const CurrentEvent = ({ currentEvent }) => {
         De {new Date(currentEvent.start.dateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} à{" "}
         {new Date(currentEvent.end.dateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
       </p>
-      {room && `<p>${room.displayName}</p>`}
+      {room && <p>{room.displayName}</p>}
     </div>
   );
 };
