@@ -36,9 +36,9 @@ export const Room = ({ room, onBook }) => {
       className="room"
       style={{
         backgroundColor:
-          room.timeUntilNextBooking > 60
+          room.timeUntilNextBooking > 30
             ? "#81c784"
-            : room.timeUntilNextBooking > 30
+            : room.timeUntilNextBooking > 5
             ? "#fff176"
             : "#e57373",
       }}      
